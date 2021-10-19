@@ -3,7 +3,7 @@ import { injectable, postConstruct, inject } from '@theia/core/shared/inversify'
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
-
+import {EditorManager, EditorWidget} from '@theia/editor/lib/browser';
 @injectable()
 export class TheiaWidgetWidget extends ReactWidget {
 
@@ -13,6 +13,9 @@ export class TheiaWidgetWidget extends ReactWidget {
     @inject(MessageService)
     protected readonly messageService!: MessageService;
 
+    @inject(EditorManager)
+    protected readonly editorManager: EditorManager;
+    
     @postConstruct()
     protected async init(): Promise < void> {
         this.id = TheiaWidgetWidget.ID;
@@ -36,4 +39,13 @@ export class TheiaWidgetWidget extends ReactWidget {
         this.messageService.info('Congratulations: TheiaWidget Widget Successfully Created!');
     }
 
+    currentFileEditorWidget = (): EditorWidget | undefined => {
+        const editorWidget = this.editorManager.currentEditor;
+        if (editorWidget) {
+            if (editorWidget.editor.uri.scheme === 'file') {
+                return editorWidget;
+            }
+        }
+        return undefined;
+    };
 }
