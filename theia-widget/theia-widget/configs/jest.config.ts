@@ -6,5 +6,6 @@ export default async (): Promise<Config.InitialOptions> => ({
     rootDir: '../',
     transform: {
         '^.+\\.(ts)$': 'ts-jest',
+        "^.+\\.css$": "jest-transform-css"
     }
 });
