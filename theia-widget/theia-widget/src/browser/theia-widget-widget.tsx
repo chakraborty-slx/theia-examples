@@ -3,6 +3,10 @@ import { injectable, postConstruct, inject } from '@theia/core/shared/inversify'
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
+import {WorkspaceService} from '@theia/workspace/lib/browser';
+import { ProblemManager } from '@theia/markers/lib/browser/problem/problem-manager';
+import URI from '@theia/core/lib/common/uri';
+
 // import {EditorManager} from '@theia/editor/lib/browser';
 @injectable()
 export class TheiaWidgetWidget extends ReactWidget {
@@ -12,6 +16,13 @@ export class TheiaWidgetWidget extends ReactWidget {
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
+
+    
+    @inject(ProblemManager)
+    protected readonly problemManager: ProblemManager;
+
+    @inject(WorkspaceService)
+    private readonly workspaceService: WorkspaceService;
 
     // @inject(EditorManager)
     // protected readonly editorManager: EditorManager;
@@ -37,6 +48,7 @@ export class TheiaWidgetWidget extends ReactWidget {
 
     protected displayMessage(): void {
         this.messageService.info('Congratulations: TheiaWidget Widget Successfully Created!');
+        this.workspaceService.getWorkspaceRootUri(new URI('asdf'));
     }
 
     // currentFileEditorWidget = (): EditorWidget | undefined => {
