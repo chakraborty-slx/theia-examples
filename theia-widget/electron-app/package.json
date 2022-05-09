@@ -18,7 +18,8 @@
     "theia-widget": "0.0.0"
   },
   "devDependencies": {
-    "@theia/cli": "latest"
+    "@theia/cli": "latest",
+    "electron": "^15.3.5"
   },
   "scripts": {
     "prepare": "theia build --mode development",
